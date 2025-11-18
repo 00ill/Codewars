@@ -1,37 +1,10 @@
 #include <inttypes.h>
-#include <string.h>
-#include <stdlib.h>
+#include <stdio.h>
 uint32_t ips_between (const char *start, const char *end)
 {
-  
-  char *delim = ".";
-  unsigned int array[4] = {0};
-  int len = strlen(start);
-  
-  char *START = (char*)malloc(sizeof(char) * (len + 1));
-  char *END = (char*)malloc(sizeof(char) * (len + 1));;
-  strcpy(START, start);
-  strcpy(END, end);
-  
-  char *ptr = strtok(START, delim);
-  array[0] = atoi(ptr);
-  for(int i = 0; i < 3; i++)
-  {
-    ptr = strtok(NULL, delim);
-    array[i + 1] = atoi(ptr);
-  }
-  
-  ptr = strtok(END, delim);
-  array[0] -= atoi(ptr);
-  for(int i = 0; i < 3; i++)
-  {
-    ptr = strtok(NULL, delim);
-    array[i + 1] -= atoi(ptr);
-    
-  }
-  uint32_t answer = 0;
-  
-  answer += (-array[0] * 256 * 256 * 256) + (-array[1] * 256 * 256) + (-array[2] * 256) + (-array[3]);
-  
-  return answer;
+  unsigned int S[4];
+  unsigned int E[4];
+  sscanf(start, "%u.%u.%u.%u", &S[0], &S[1], &S[2], &S[3]);
+  sscanf(end, "%u.%u.%u.%u", &E[0], &E[1], &E[2], &E[3]);
+  return ((E[0] - S[0]) * 256 * 256 * 256) + ((E[1] - S[1]) * 256 * 256) +((E[2] - S[2]) * 256) +((E[3] - S[3]));
 }
