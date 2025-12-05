@@ -1,13 +1,11 @@
-#include <stdlib.h>
 char *get_initials (const char *full_name, char initials[4])
 {
-  char *temp = calloc(strlen(full_name) + 1, 1);
-  strcpy(temp, full_name);
-  char *token = strtok(temp, " ");
-  initials[0] = toupper(token[0]);
+  char *buffer1 = calloc(strlen(full_name) + 1, 1);
+  char *buffer2 = calloc(strlen(full_name) + 1, 1);
+  sscanf(full_name, "%s %s", buffer1, buffer2);
+  initials[0] = toupper(buffer1[0]);
   initials[1] = '.';
-  token = strtok(NULL, " ");
-  initials[2] = toupper(token[0]);
-  initials[3] = '\0'; 
-  return initials;
+  initials[2] = toupper(buffer2[0]);
+  initials[3] = '\0';
+  return initials; // return it
 }
